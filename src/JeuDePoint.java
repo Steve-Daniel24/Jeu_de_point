@@ -30,12 +30,12 @@ public class JeuDePoint extends JPanel {
     private JButton ContinuerJeuButton;
     private JLabel message;
 
-    int win_r1, win_c1, win_r2, win_c2;
+    int win_r1 = 0, win_c1 = 0, win_r2 = 0, win_c2 = 0;
 
     public JeuDePoint() {
         setLayout(null);
         setPreferredSize(new Dimension(350, 300));
-        setBackground(new Color(0, 160, 0));
+        setBackground(Color.LIGHT_GRAY);
         Board board = new Board();
 
         add(Suggerer_point);
@@ -71,7 +71,7 @@ public class JeuDePoint extends JPanel {
             newGameButton.addActionListener(this);
             message = new JLabel("", JLabel.CENTER);
             message.setFont(new Font("Serif", Font.BOLD, 13));
-            message.setForeground(Color.GREEN);
+            message.setForeground(Color.WHITE);
 
             Suggerer_point = new JButton("Suggerer coup");
             Suggerer_point.addActionListener(this);
@@ -201,16 +201,11 @@ public class JeuDePoint extends JPanel {
 
             super.paintComponent(g);
 
-            // Test
-            // test(g);
-            // test8ner(g);
-            // Test
-
             // Les carreaux dans le board
             g.setColor(Color.DARK_GRAY);
             for (int i = 1; i < 13; i++) {
-                g.drawLine(1 + 13 * i, 0, 1 + 13 * i, getSize().height); // Colonne
-                g.drawLine(0, 1 + 13 * i, getSize().width, 1 + 13 * i); // Ligne
+                g.drawLine(3 + 13 * i, 0, 3 + 13 * i, getSize().height); // Colonne
+                g.drawLine(0, 4 + 13 * i, getSize().width, 4 + 13 * i); // Ligne
             }
 
             //
@@ -218,7 +213,20 @@ public class JeuDePoint extends JPanel {
                 for (int col = 0; col < 13; col++)
                     if (board[row][col] != EMPTY)
                         drawPiece(g, board[row][col], row, col);
+
+            // if (win_r1 >= 0)
+            //     drawWinLine(g);
+
         }
+
+        // private void drawWinLine(Graphics g) {
+        //     g.setColor(Color.RED);
+        //     g.drawLine(8 + 13 * win_c1, 8 + 13 * win_r1, 8 + 13 * win_c2, 8 + 13 * win_r2);
+        //     if (win_r1 == win_r2)
+        //         g.drawLine(8 + 13 * win_c1, 7 + 13 * win_r1, 8 + 13 * win_c2, 7 + 13 * win_r2);
+        //     else
+        //         g.drawLine(7 + 13 * win_c1, 8 + 13 * win_r1, 7 + 13 * win_c2, 8 + 13 * win_r2);
+        // }
 
         // Methode pour colorier les pieces
         private void drawPiece(Graphics g, int piece, int row, int col) {
@@ -226,7 +234,7 @@ public class JeuDePoint extends JPanel {
                 g.setColor(Color.WHITE);
             else
                 g.setColor(Color.BLACK);
-            g.fillOval(3 + 13 * col, 3 + 13 * row, 10, 10);
+            g.fillOval( 13 * col, 13 * row, 8, 8);
         }
 
         private boolean winner(int row, int col) {
@@ -336,7 +344,6 @@ public class JeuDePoint extends JPanel {
                     return move;
                 }
 
-                
             }
 
             return bestMove != null ? bestMove : possibleMoves.get(0);
@@ -437,11 +444,11 @@ public class JeuDePoint extends JPanel {
                 }
 
                 // if (createsAlignment(row, col, currentPlayer, 3)) {
-                //     bestMove = move;
+                // bestMove = move;
                 // }
 
                 // if (createsAlignment(row, col, currentPlayer, 2)) {
-                //     bestMove = move;
+                // bestMove = move;
                 // }
 
             }
